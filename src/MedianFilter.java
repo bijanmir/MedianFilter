@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -7,8 +8,11 @@ public class MedianFilter {
     private BufferedImage[] images;
 
     public MedianFilter(String[] imageInputFileNames){
-        for(String image : imageInputFileNames)
+        for(String image : imageInputFileNames){
             System.out.println(image);
+            System.out.println(image);
+        }
+
     }
 
     public BufferedImage readImage(File file){
@@ -20,6 +24,8 @@ public class MedianFilter {
     }
 
     public int writeImage(String outputFileName){
+        File f2 = new File(outputFileName);
+        ImageIO.write(img);
         return -1;
     }
 
