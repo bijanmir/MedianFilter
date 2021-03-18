@@ -1,13 +1,8 @@
-import jdk.jshell.execution.FailOverExecutionControlProvider;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageFilter;
-import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MedianFilter {
@@ -66,7 +61,8 @@ public class MedianFilter {
     public BufferedImage removeNoise() {
         for (int x = 0; x < filteredImage.getWidth(); x++) {
             for (int y = 0; y < filteredImage.getHeight(); y++) {
-                int color = getMedianValue(x, y);
+                ArrayList<Integer> pixels = getPixels(x, y);
+                int color = getMedianValue(pixels);
                 filteredImage.setRGB(x, y, color);
             }
         }
@@ -74,15 +70,20 @@ public class MedianFilter {
     }
 
 
-    public int getMedianValue(int x, int y) {
-        int rgb = 0;
+    public ArrayList<Integer> getPixels(int x, int y) {
 
-        ArrayList<Integer> pixel = new ArrayList<Integer>();
+        ArrayList<Integer> pixels = new ArrayList<Integer>();
         for (BufferedImage image : images) {
-            pixel.add(image.getRGB(x, y));
+            pixels.add(image.getRGB(x, y));
         }
-        Collections.sort(pixel);
-        rgb = pixel.get(pixel.size() / 2);
+
+        return pixels;
+    }
+
+    public int getMedianValue(ArrayList<Integer> pixels){
+        int rgb = 0;
+        Collections.sort(pixels);
+        rgb = pixels.get(pixels.size() / 2);
         return rgb;
     }
 
