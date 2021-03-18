@@ -16,25 +16,22 @@ public class MedianFilter {
     private File[] files;
 
 
-    public MedianFilter(String[] imageInputFileNames){
+    public MedianFilter(String[] fileNames){
 
-        int length = imageInputFileNames.length;
+        int length = fileNames.length;
 
         files = new File[length];
         images = new BufferedImage[length];
 
         for(int i = 0; i < length; i++){
-            files[i] = new File(imageInputFileNames[i]);
+            files[i] = new File(fileNames[i]);
             images[i] = readImage(files[i]);
         }
     }
 
     public void printBufferedImages(){
-//        for(BufferedImage img : images){
-//            System.out.println(String.format("%s", img.toString()));
-//        }
-        for(File file : files){
-            System.out.println(file.toString());
+        for(BufferedImage img : images){
+            System.out.println(String.format("%s", img.toString()));
         }
     }
 
