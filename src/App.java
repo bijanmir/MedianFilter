@@ -7,7 +7,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        String[] files = {
+        String[] fileNames = {
                 "veg1.jpg",
                 "veg2.jpg",
                 "veg3.jpg",
@@ -18,21 +18,17 @@ public class App {
                 "veg8.jpg",
         };
 
-        MedianFilter mf = new MedianFilter(files);
+        MedianFilter mf = new MedianFilter(fileNames);
 
-        mf.printBufferedImages();
-
-
-
-        //BufferedImage bi= mf.filterImage();
+        BufferedImage bi= mf.filterImage();
 
 
-//        try {
-//            File outputfile = new File("FilteredImage.jpg");
-//            ImageIO.write(bi, "jpg",  outputfile);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            File outputfile = new File("FilteredImage.jpg");
+            ImageIO.write(bi, "jpg",  outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
