@@ -16,32 +16,44 @@ public class MedianFilter {
     private File[] files;
 
 
-    public MedianFilter(String[] fileNames){
+    public MedianFilter(String[] fileNames) {
 
         int length = fileNames.length;
+
 
         files = new File[length];
         images = new BufferedImage[length];
 
-        for(int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             files[i] = new File(fileNames[i]);
             images[i] = readImage(files[i]);
         }
+
+        filteredImage = new BufferedImage(images[0].getWidth(), images[0].getHeight(), BufferedImage.TYPE_INT_RGB);
     }
 
-    public void printBufferedImages(){
-        for(BufferedImage img : images){
+    public void writeImage(String str) throws IOException {
+        try {
+            File outputfile = new File(str);
+            ImageIO.write(filteredImage, "jpg", outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printBufferedImages() {
+        for (BufferedImage img : images) {
             System.out.println(String.format("%s", img.toString()));
         }
     }
 
-    public BufferedImage readImage(File pic){
+    public BufferedImage readImage(File pic) {
         BufferedImage img = null;
-        if(!pic.exists()){
+        if (!pic.exists()) {
             return null;
         }
-        try{
-            if(pic.canRead()){
+        try {
+            if (pic.canRead()) {
                 img = ImageIO.read(pic);
             }
         } catch (IOException e) {
@@ -51,30 +63,41 @@ public class MedianFilter {
         return img;
     }
 
-    public BufferedImage filterImage(){
-        BufferedImage img = new BufferedImage(images[0].getWidth(), images[0].getHeight(), BufferedImage.TYPE_INT_RGB);
-
-        for(int x = 0; x < img.getWidth(); x++){
-            for(int y = 0; y < img.getHeight(); y++){
-                int color = getMedian(x, y);
-                img.setRGB(x, y, color);
+    public BufferedImage removeNoise() {
+        for (int x = 0; x < filteredImage.getWidth(); x++) {
+            for (int y = 0; y < filteredImage.getHeight(); y++) {
+                int color = getMedianValue(x, y);
+                filteredImage.setRGB(x, y, color);
             }
         }
-
-        return img;
+        return filteredImage;
     }
 
 
-    public int getMedian(int x, int y){
+    public int getMedianValue(int x, int y) {
         int rgb = 0;
 
         ArrayList<Integer> pixel = new ArrayList<Integer>();
-        for(BufferedImage image : images){
+        for (BufferedImage image : images) {
             pixel.add(image.getRGB(x, y));
         }
         Collections.sort(pixel);
         rgb = pixel.get(pixel.size() / 2);
         return rgb;
+    }
+
+    public int getHeight() {
+        if (filteredImage == null)
+            return -1;
+
+        return filteredImage.getHeight();
+    }
+
+    public int getWidth() {
+        if (filteredImage == null)
+            return -1;
+
+        return filteredImage.getWidth();
     }
 
 

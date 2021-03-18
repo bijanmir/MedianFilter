@@ -20,15 +20,9 @@ public class App {
 
         MedianFilter mf = new MedianFilter(fileNames);
 
-        BufferedImage bi= mf.filterImage();
 
 
-        try {
-            File outputfile = new File("FilteredImage.jpg");
-            ImageIO.write(bi, "jpg",  outputfile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
