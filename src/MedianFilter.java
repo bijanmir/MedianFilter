@@ -64,6 +64,7 @@ public class MedianFilter {
         return img;
     }
 
+
     public int getMedian(int x, int y){
         int rgb = 0;
 
