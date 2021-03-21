@@ -31,7 +31,7 @@ public class MedianFilter {
         filteredImage = new BufferedImage(images[0].getWidth(), images[0].getHeight(), BufferedImage.TYPE_INT_RGB);
     }
 
-    public void writeImage(String str) throws IOException {
+    public void writeImage(String str) {
         try {
             File outputfile = new File(str);
             ImageIO.write(filteredImage, "jpg", outputfile);
